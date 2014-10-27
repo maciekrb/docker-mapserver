@@ -11,12 +11,15 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # -------- Install Packages and dependencies --------
 RUN apt-get update && apt-get install -y python-dev python-setuptools apache2 php5 \
-locales libapache2-mod-fcgid mapserver-bin php5-mapscript postgis tilecache memcached && a2enmod actions
+locales libapache2-mod-fcgid mapserver-bin php5-mapscript php5-memcache postgis tilecache memcached \
+&& a2enmod actions
 
 RUN localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 \
 && apt-get install -y php5-pgsql
 
+# ------- We run everything using supervisor ---------
 RUN easy_install supervisor flup Paste supervisor-stdout && mkdir /var/log/supervisor
+ENV PATH /usr/local/bin:$PATH
 
 # grab gosu for easy step-down from root
 #ADD https://github.com/tianon/gosu/releases/download/1.1/gosu /usr/local/bin/gosu

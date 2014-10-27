@@ -6,8 +6,7 @@ if [ "$1" = 'supervisord' ]; then
   # https://github.com/maciekrb/docker-mapserver/blob/master/Dockerfile
   chown -R www-data "$APPDATA"
 
-  exec supervisord -c /etc/supervisor/supervisord.conf
-
+  exec supervisord 
 fi
 
 exec "$@"
